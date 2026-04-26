@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <RadioLib.h>
 #include <SPI.h>
-#include "ProtocolBAM.h"
+#include "BeaconHeader.h"
 
 
 /*~~~~~Hardware Definitions~~~~~*/
@@ -19,7 +19,7 @@
 
 
 /*~~~~~Global Variables~~~~~*/
-
+bool TXToggle = false; // Toggle with button press to start or stop TX loop.
 
 
 
@@ -36,6 +36,7 @@ SX1262 radio = new Module(LORA_NSS_PIN, LORA_DIO1_PIN, LORA_RST_PIN, LORA_BUSY_P
 
 /*~~~~~Function Prototypes~~~~~*/
 void configureRadioChannel(float freq, float bw, uint8_t sf);
+void error_message(const char* message, int16_t errorCode);
 
 
 /*~~~~~Interrupt Handlers~~~~~*/
@@ -68,6 +69,14 @@ void buttonISR(void) {
 
 ////////////*~~~~~Helper Functions~~~~~*/
 
+void error_message(const char* message, int16_t errorCode) {
+    Serial.print("Error: ");
+    Serial.print(message);
+    Serial.print(" (Code: ");
+    Serial.print(errorCode);
+    Serial.println(")");
+}
+
 void configureRadioChannel(float freq, float bw, uint8_t sf) {
   // Wake radio from sleep mode if needed before configuration
   int16_t state = radio.standby();
@@ -91,6 +100,79 @@ void configureRadioChannel(float freq, float bw, uint8_t sf) {
   }
 }
 
+// Transmits predetermined packet and listens for ACK from remote unit. Built in timeout. Returns ACK message (or error message if timeout occurs)
+void TXandListenforACK() {
+  String ACKmsge = "No ACK received";
+
+  // Transmit test packet
+  int16_t state = radio.transmit(TEST_PACKET_10B);
+  if (state != RADIOLIB_ERR_NONE) {
+      Serial.printf("Transmission failed: %d\n", state);
+  }
+
+  // Start listening for response
+  resumeReception();
+  unsigned long startTime = millis();
+  
+  // Wait for response within listen window
+  while(millis() - startTime < RESPONSE_LISTEN_WINDOW) {
+      if(receivedFlag) {
+          receivedFlag = false;
+          
+          String received_data;
+          state = radio.readData(received_data);
+          if (state == RADIOLIB_ERR_NONE) {
+              // packet was successfully received
+              Serial.println("Received packet!");
+              ACKmsge = received_data;
+          }
+          else if (state == RADIOLIB_ERR_RX_TIMEOUT) {
+              // timeout occurred while waiting for a packet
+              Serial.println("timeout!");
+              ACKmsge = "ACK timeout";
+          } else if (state == RADIOLIB_ERR_CRC_MISMATCH) {
+              // packet was received, but is malformed
+              Serial.println("CRC error!");
+              ACKmsge = "ACK CRC error";
+          } else {
+              // some other error occurred
+              Serial.print("failed, code ");
+              Serial.println(state);
+              ACKmsge = "ACK reception failed with error code " + String(state);
+          }
+          resumeReception();  
+      }
+      delay(10); // Small delay to prevent busy waiting
+  }
+  Serial.printf("Listen window ended. ACK message: %s\n", ACKmsge.c_str());
+  resumeReception();
+}
+
+void resumeReception() {
+  int16_t state = radio.startReceive();
+    if (state != RADIOLIB_ERR_NONE) {
+      error_message("Resuming reception failed", state);
+    }
+}
+
+void generateandTXACK(String packet_data) {
+  String ACKmsge = "ACK BER: ";
+  // Check packet integrety
+  double ber = calcBER(packet_data);
+
+  // Transmit ACK
+  String fullACK = ACKmsge + String(ber);
+  int16_t state = radio.transmit(fullACK.c_str());
+  if (state != RADIOLIB_ERR_NONE) {
+      Serial.printf("Transmission failed: %d\n", state);
+  }
+  resumeReception();
+}
+
+double calcBER(String packet_data) {
+  // Placeholder function to calculate BER. 
+  return 0.0; // Assume perfect reception for now
+}
 
 /*~~~~~Application~~~~~*/
 void setup() {
@@ -111,8 +193,8 @@ void setup() {
   // sync word:                   0x34 (LoRaWAN sync word)
   // output power:                0 dBm
   // preamble length:             8 symbols (LoRaWAN preamble length)
-  Serial.print("Initializing radio with downlink channel (listen for activity)...");
-  int16_t state = radio.begin(DOWNLINK_FREQ, DOWNLINK_BW, DOWNLINK_SF, 5, 0x34, 10, 8);
+  Serial.print("Initializing radio with uplink channel (ready for Tx)...");
+  int16_t state = radio.begin(FREQ, BW, SF, 5, 0x34, 1, 8);
   if (state != RADIOLIB_ERR_NONE) {
       error_message("Radio initializion failed", state);
   }
@@ -146,16 +228,20 @@ void setup() {
   radio.setDio1Action(receiveISR);
 
 
-  // Start on downlink channel (always listening for activity)
-  // start continuous reception
-  resumeReception();
-  Serial.println("Complete!");
+  // Start on sleep. Waits until butten press to start continous transmisstion/ACK loop
+  state = radio.sleep();
+  Serial.println("Complete! Press button to start main loop.");
 }
 
 void loop() {
 
-  // Handle packet receptions
-  if (receivedFlag) {
+  //Tx and wait for ACK if toggle is on
+  if(TXToggle) {
+      TXandListenforACK();
+  }
+
+  // Handle reception and send ACK 
+  if (!TXToggle && receivedFlag) {
     receivedFlag = false;
 
     // you can receive data as an Arduino String
@@ -164,11 +250,9 @@ void loop() {
 
     if (state == RADIOLIB_ERR_NONE) {
       // packet was successfully received
-      //Serial.println("Received packet!");
-      Packet receivedPacket = parseStringPacket(packet_data);
-
-      // TODO: handle parsed packet
-      (void)receivedPacket;
+      Serial.println("Received packet!");
+      generateandTXACK(packet_data);
+      
     } else if (state == RADIOLIB_ERR_RX_TIMEOUT) {
       // timeout occurred while waiting for a packet
       Serial.println("timeout!");
@@ -184,10 +268,14 @@ void loop() {
     resumeReception();
   }
 
-  // Handle button presses to start transmissions
+  // Handle button presses to start/stop Tx test loop
   if(buttonFlag) {
     buttonFlag = false;
-
-    // TODO: add transmit behavior here
+    TXToggle = !TXToggle;
+    if (TXToggle) {
+      Serial.println("Starting transmission loop...");
+    } else {
+      Serial.println("Stopping transmission loop...");
+    }
   }
 }
