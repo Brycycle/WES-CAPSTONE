@@ -20,6 +20,8 @@
 
 /*~~~~~Global Variables~~~~~*/
 bool TXToggle = false; // Toggle with button press to start or stop TX loop.
+enum ChannelMode { TX_MODE, ACK_MODE };
+volatile ChannelMode currentChannel = ACK_MODE; //start in ACK mode
 
 
 
@@ -37,6 +39,9 @@ SX1262 radio = new Module(LORA_NSS_PIN, LORA_DIO1_PIN, LORA_RST_PIN, LORA_BUSY_P
 /*~~~~~Function Prototypes~~~~~*/
 void configureRadioChannel(float freq, float bw, uint8_t sf);
 void error_message(const char* message, int16_t errorCode);
+bool switchToTXlinkChannel();
+bool switchToACKlinkChannel();
+void configureRadioChannel(float freq, float bw, uint8_t sf);
 
 
 /*~~~~~Interrupt Handlers~~~~~*/
@@ -105,12 +110,14 @@ void TXandListenforACK() {
   String ACKmsge = "No ACK received";
 
   // Transmit test packet
+  switchToTXlinkChannel();
   int16_t state = radio.transmit(TEST_PACKET_10B);
   if (state != RADIOLIB_ERR_NONE) {
       Serial.printf("Transmission failed: %d\n", state);
   }
 
   // Start listening for response
+  switchToACKlinkChannel();
   resumeReception();
   unsigned long startTime = millis();
   
@@ -142,9 +149,10 @@ void TXandListenforACK() {
           }
           resumeReception();  
       }
-      delay(10); // Small delay to prevent busy waiting
+      delay(1); // Small delay to prevent busy waiting
   }
   Serial.printf("ACK received: %s\n", ACKmsge.c_str());
+  switchToTXlinkChannel();
   resumeReception();
 }
 
@@ -161,11 +169,13 @@ void generateandTXACK(String packet_data) {
   double ber = calcBER(packet_data);
 
   // Transmit ACK
+  switchToACKlinkChannel();
   String fullACK = ACKmsge + String(ber);
   int16_t state = radio.transmit(fullACK.c_str());
   if (state != RADIOLIB_ERR_NONE) {
       Serial.printf("Transmission failed: %d\n", state);
   }
+  switchToTXlinkChannel();
   resumeReception();
 }
 
@@ -173,6 +183,27 @@ double calcBER(String packet_data) {
   // Placeholder function to calculate BER. 
   return 0.005; // Assume perfect reception for now
 }
+
+bool switchToTXlinkChannel() {
+  if (currentChannel == TX_MODE) return true;
+  
+  //Serial.println("Switching to uplink channel...");
+  configureRadioChannel(TX_FREQ, TX_BW, TX_SF);
+  currentChannel = TX_MODE;
+  return true;
+}
+
+// Switch to downlink channel (for listening for activity)
+bool switchToACKlinkChannel() {
+  if (currentChannel == ACK_MODE) return true;
+  
+  //Serial.println("Switching to downlink channel...");
+  configureRadioChannel(ACK_FREQ, ACK_BW, ACK_SF);
+  currentChannel = ACK_MODE;
+  return true;
+
+}
+
 
 /*~~~~~Application~~~~~*/
 void setup() {
@@ -193,8 +224,8 @@ void setup() {
   // sync word:                   0x34 (LoRaWAN sync word)
   // output power:                0 dBm
   // preamble length:             8 symbols (LoRaWAN preamble length)
-  Serial.print("Initializing radio with uplink channel (ready for Tx)...");
-  int16_t state = radio.begin(FREQ, BW, SF, 5, 0x34, 1, 8);
+  Serial.print("Initializing radio with TX channel (ready for TX or listen)...");
+  int16_t state = radio.begin(TX_FREQ, TX_BW, TX_SF, 5, 0x34, 1, 8);
   if (state != RADIOLIB_ERR_NONE) {
       error_message("Radio initializion failed", state);
   }
@@ -227,10 +258,7 @@ void setup() {
   // set the function that will be called when a new packet is received
   radio.setDio1Action(receiveISR);
 
-
-  // Start on sleep. Waits until butten press to start continous transmisstion/ACK loop
-  state = radio.sleep();
-  Serial.println("Complete! Press button to start main loop.");
+  Serial.println("Complete! Waiting to ACK. Press button to start TX loop.");
 }
 
 void loop() {
@@ -241,7 +269,7 @@ void loop() {
   }
 
   // Handle reception and send ACK 
-  if (!TXToggle && receivedFlag) {
+  if (receivedFlag) {
     receivedFlag = false;
 
     // you can receive data as an Arduino String
