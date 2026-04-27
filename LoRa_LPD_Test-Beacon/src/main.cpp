@@ -83,6 +83,7 @@ void error_message(const char* message, int16_t errorCode) {
 }
 
 void configureRadioChannel(float freq, float bw, uint8_t sf) {
+  /*
   // Wake radio from sleep mode if needed before configuration
   int16_t state = radio.standby();
   if (state != RADIOLIB_ERR_NONE) {
@@ -90,8 +91,9 @@ void configureRadioChannel(float freq, float bw, uint8_t sf) {
   } else {
     Serial.println("Radio woken up from sleep mode");
   }
+  */
   
-  state = radio.setFrequency(freq);
+  int16_t state = radio.setFrequency(freq);
   if (state != RADIOLIB_ERR_NONE) {
     error_message("Failed to set frequency", state);
   }

@@ -33,4 +33,3 @@ double calcBER(String packet_data);
 
 //common variables
 extern bool TXToggle;
-extern volatile ChannelMode currentChannel;
