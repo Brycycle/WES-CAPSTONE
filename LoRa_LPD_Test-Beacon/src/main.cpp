@@ -142,16 +142,16 @@ void TXandListenforACK() {
           else if (state == RADIOLIB_ERR_RX_TIMEOUT) {
               // timeout occurred while waiting for a packet
               Serial.println("timeout!");
-              ACKmsge = "ACK timeout";
+              ACKmsg = "ACK timeout";
           } else if (state == RADIOLIB_ERR_CRC_MISMATCH) {
               // packet was received, but is malformed
               Serial.println("CRC error!");
-              ACKmsge = "ACK CRC error";
+              ACKmsg = "ACK CRC error";
           } else {
               // some other error occurred
               Serial.print("failed, code ");
               Serial.println(state);
-              ACKmsge = "ACK reception failed with error code " + String(state);
+              ACKmsg = "ACK reception failed with error code " + String(state);
           }
           resumeReception();  
       }
