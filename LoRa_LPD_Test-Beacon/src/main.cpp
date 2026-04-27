@@ -123,10 +123,7 @@ void TXandListenforACK() {
       //Serial.println("Packet transmitted, waiting for ACK...");
   }
 
-  while(radio.isTransmitting()) {
-    // Wait for transmission to complete
-    delay(10);
-  } 
+
 
   // Start listening for response
   receivedFlag = false;
