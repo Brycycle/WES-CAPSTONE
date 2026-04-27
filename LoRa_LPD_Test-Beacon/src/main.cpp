@@ -149,12 +149,12 @@ void TXandListenforACK() {
           }
           else if (state == RADIOLIB_ERR_RX_TIMEOUT) {
               // timeout occurred while waiting for a packet
-              Serial.println("timeout!");
-              ACKmsg = "ACK timeout";
+              Serial.println("SUT timeout!");
+              ACKmsg = "SUT Rx timeout";
           } else if (state == RADIOLIB_ERR_CRC_MISMATCH) {
               // packet was received, but is malformed
-              Serial.println("CRC error!");
-              ACKmsg = "ACK CRC error";
+              Serial.println("SUT received CRC error!");
+              ACKmsg = "SUT Rx CRC error";
           } else {
               // some other error occurred
               Serial.print("failed, code ");
