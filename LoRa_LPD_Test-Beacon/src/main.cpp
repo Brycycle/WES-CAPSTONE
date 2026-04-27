@@ -109,7 +109,7 @@ void configureRadioChannel(float freq, float bw, uint8_t sf) {
 
 // Transmits predetermined packet and listens for ACK from remote unit. Built in timeout. Returns ACK message (or error message if timeout occurs)
 void TXandListenforACK() {
-  String ACKmsge = "No ACK received";
+  String ACKmsge = "No ACK";
 
   // Transmit test packet
   switchToTXlinkChannel();
@@ -153,7 +153,7 @@ void TXandListenforACK() {
       }
       delay(1); // Small delay to prevent busy waiting
   }
-  Serial.printf("ACK received: %s\n", ACKmsge.c_str());
+  Serial.printf(ACKmsge.c_str());
   switchToTXlinkChannel();
   resumeReception();
 }
@@ -261,6 +261,7 @@ void setup() {
   radio.setDio1Action(receiveISR);
 
   Serial.println("Complete! Waiting to ACK. Press button to start TX loop.");
+  resumeReception();
 }
 
 void loop() {
