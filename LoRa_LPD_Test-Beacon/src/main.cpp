@@ -115,7 +115,7 @@ void TXandListenforACK() {
 
   // Transmit test packet
   switchToTXlinkChannel();
-  int16_t state = radio.transmit(TEST_PACKET_10B);
+  int16_t state = radio.transmit(TEST_PACKET_100B);
   if (state != RADIOLIB_ERR_NONE) {
       Serial.printf("Transmission failed: %d\n", state);
   }
