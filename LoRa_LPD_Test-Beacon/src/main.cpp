@@ -118,10 +118,6 @@ void TXandListenforACK() {
       Serial.printf("Transmission failed: %d\n", state);
   }
 
-  while(0){
-
-  }
-
   // Start listening for response
   switchToACKlinkChannel();
   resumeReception();
@@ -155,7 +151,7 @@ void TXandListenforACK() {
           }
           resumeReception();  
       }
-      delay(1); // Small delay to prevent busy waiting
+      delay(10); // Small delay to prevent busy waiting
   }
   Serial.printf(ACKmsge.c_str());
   switchToTXlinkChannel();
