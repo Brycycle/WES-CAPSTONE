@@ -279,7 +279,7 @@ void loop() {
   }
 
   // Handle reception and send ACK 
-  if (!TXToggle && receivedFlag && inTXTestLoop) {
+  if (!TXToggle && receivedFlag && !inTXTestLoop) {
     receivedFlag = false;
 
     // you can receive data as an Arduino String
