@@ -20,6 +20,7 @@
 
 /*~~~~~Global Variables~~~~~*/
 bool TXToggle = false; // Toggle with button press to start or stop TX loop.
+bool inTXTestLoop = false; // Internal flag to track if in the TX loop (used to control RX logic)
 enum ChannelMode { TX_MODE, ACK_MODE };
 volatile ChannelMode currentChannel = ACK_MODE; //start in ACK mode
 
@@ -272,7 +273,7 @@ void loop() {
   }
 
   // Handle reception and send ACK 
-  if (!TXToggle && receivedFlag) {
+  if (!TXToggle && receivedFlag && inTXTestLoop) {
     receivedFlag = false;
 
     // you can receive data as an Arduino String
@@ -303,6 +304,7 @@ void loop() {
   if(buttonFlag) {
     buttonFlag = false;
     TXToggle = !TXToggle;
+    inTXTestLoop = TXToggle; // Update internal flag to match toggle state
     if (TXToggle) {
       Serial.println("Starting transmission loop...");
     } else {
