@@ -4,42 +4,56 @@
 #include <ctime>
 using namespace std;
 
-#define TEST_SF 12
-#define TEST_BW_INT 500    // Integer for preprocessor comparisons
-#define TEST_BW 500.0      // Float for actual radio config
+// Target minimum: 50B payload = 400bits + overhead = ~450bps
+/*
+  SF 7 , BW 10.4   DReff ~455 bps
+  SF 7 , BW 25     DReff ~1000 bps
+  SF 7 , BW 125    DReff 5468 bps
+  SF 7 , BW 500    DReff 21,875 bps
+
+  SF 12, BW 10.4   DReff 24 bps    questionable for time?
+  SF 12, BW 125    DReff 292.96 bps
+  SD 12, BW 500    DReff 1171 bps
+*/ 
+
+#define TEST_SF 12          // 7, 12
+#define TEST_BW_INT 500    // Integer for preprocessor comparisons: 10, 25, 125, 500
+#define TEST_BW 500.0      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
 
 
 // LoRa channel configuration //Beacon Tx on uplink, remote unit Tx on downlink
 #define TX_FREQ 914.9
-#define TX_BW TEST_BW       // 10.4, 125, 500
-#define TX_SF TEST_SF           // 7, 12
+#define TX_BW TEST_BW       
+#define TX_SF TEST_SF           
 #define ACK_FREQ 923.3
 #define ACK_BW TEST_BW       // 10.4, 125, 500
-#define ACK_SF TEST_SF           // 7, 12
+#define ACK_SF TEST_SF         
 
-// Dynamic RESPONSE_LISTEN_WINDOW based on SF and BW configuration
+// Dynamic RESPONSE_LISTEN_WINDOW based on SF and BW configuration for Tx of ACK of 10Bytes
 #if TEST_SF == 7
   #if TEST_BW_INT == 10
-    #define RESPONSE_LISTEN_WINDOW 2000   
+    #define RESPONSE_LISTEN_WINDOW 1000   
+  #elif TEST_BW_INT == 25
+    #define RESPONSE_LISTEN_WINDOW 500
   #elif TEST_BW_INT == 125
-    #define RESPONSE_LISTEN_WINDOW 250   
+    #define RESPONSE_LISTEN_WINDOW 250  
   #elif TEST_BW_INT == 500
     #define RESPONSE_LISTEN_WINDOW 250   
   #else
-    #define RESPONSE_LISTEN_WINDOW 2000   
+    #define RESPONSE_LISTEN_WINDOW 1000   
   #endif
 #elif TEST_SF == 12
   #if TEST_BW_INT == 10
-    #define RESPONSE_LISTEN_WINDOW 90000 
+    #define RESPONSE_LISTEN_WINDOW 15000 
   #elif TEST_BW_INT == 125
-    #define RESPONSE_LISTEN_WINDOW 5000  
+    #define RESPONSE_LISTEN_WINDOW 1000  
   #elif TEST_BW_INT == 500
-    #define RESPONSE_LISTEN_WINDOW 1500   
+    #define RESPONSE_LISTEN_WINDOW 500   
   #else
-    #define RESPONSE_LISTEN_WINDOW 90000  
+    #define RESPONSE_LISTEN_WINDOW 20000  
   #endif
 #else
-  #define RESPONSE_LISTEN_WINDOW 250     
+  #define RESPONSE_LISTEN_WINDOW 1000     
 #endif
 
 #define TEST_PACKET_50B "!@#$%^&*()_+1234567890-=`~[{]}|;:',<.>/?qQwWeErRtT" //50 byte (400bit) packet for testing
