@@ -111,6 +111,7 @@ void configureRadioChannel(float freq, float bw, uint8_t sf) {
 // Transmits predetermined packet and listens for ACK from remote unit. Built in timeout. Returns ACK message (or error message if timeout occurs)
 void TXandListenforACK() {
   String ACKmsg = "No ACK\n";
+  Serial.print(ACKmsg);
 
   // Transmit test packet
   switchToTXlinkChannel();
