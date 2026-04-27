@@ -115,7 +115,7 @@ void TXandListenforACK() {
 
   // Transmit test packet
   switchToTXlinkChannel();
-  int16_t state = radio.transmit(TEST_PACKET_100B);
+  int16_t state = radio.transmit(TEST_PACKET_125B);
   if (state != RADIOLIB_ERR_NONE) {
       Serial.printf("Transmission failed: %d\n", state);
   }
@@ -180,7 +180,7 @@ void generateandTXACK(String packet_data) {
 
   // Transmit ACK
   switchToACKlinkChannel();
-  String fullACK = ACKmsge + String(ber) + "\n";
+  String fullACK = ACKmsge + String(ber, 3) + "\n";  // 3 decimal places
   int16_t state = radio.transmit(fullACK.c_str());
   if (state != RADIOLIB_ERR_NONE) {
       Serial.printf("Transmission failed: %d\n", state);
