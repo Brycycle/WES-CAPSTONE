@@ -118,6 +118,9 @@ void TXandListenforACK() {
   if (state != RADIOLIB_ERR_NONE) {
       Serial.printf("Transmission failed: %d\n", state);
   }
+  else {
+      Serial.println("Packet transmitted, waiting for ACK...");
+  }
 
   // Start listening for response
   switchToACKlinkChannel();
@@ -177,6 +180,9 @@ void generateandTXACK(String packet_data) {
   int16_t state = radio.transmit(fullACK.c_str());
   if (state != RADIOLIB_ERR_NONE) {
       Serial.printf("Transmission failed: %d\n", state);
+  }
+  else {
+      Serial.println("ACK transmitted: " + fullACK);
   }
   switchToTXlinkChannel();
   resumeReception();
