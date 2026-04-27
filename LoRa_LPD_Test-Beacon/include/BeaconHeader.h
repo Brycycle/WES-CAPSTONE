@@ -14,7 +14,7 @@ using namespace std;
 #define ACK_SF 7           // 7, 12
 
 
-#define RESPONSE_LISTEN_WINDOW 100
+#define RESPONSE_LISTEN_WINDOW 1000
 
 #define TEST_PACKET_10B "TESTPACKET" //10 byte (80bit) packet for testing
 #define TEST_PACKET_50B "TESTPACKETTESTPACKETTESTPACKETTESTPACKETTESTPACKET" //50 byte (400bit) packet for testing
