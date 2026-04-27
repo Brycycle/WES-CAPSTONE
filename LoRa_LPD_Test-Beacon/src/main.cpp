@@ -135,6 +135,7 @@ void TXandListenforACK() {
   unsigned long startTime = millis();
   
   // Wait for response within listen window
+  /////////////////////////Need to test all configs to show consistent ACK period and output cycles. 
   while(millis() - startTime < RESPONSE_LISTEN_WINDOW) {
       if(receivedFlag) {
           receivedFlag = false;
@@ -161,10 +162,11 @@ void TXandListenforACK() {
               ACKmsg = "ACK reception failed with error code " + String(state);
           }
           resumeReception();  
+        break;     ////////////////////////////////////Does this break out of the while loop or just the if statement?
       }
       delay(10); // Small delay to prevent busy waiting
   }
-  Serial.print(ACKmsg);
+  Serial.print(ACKmsg); ////////////////////////Need to have logic for either no ack or ack, this could print both? Put into explicit logic for no ack or ack. bool variable?
   switchToTXlinkChannel();
   resumeReception();
 }
