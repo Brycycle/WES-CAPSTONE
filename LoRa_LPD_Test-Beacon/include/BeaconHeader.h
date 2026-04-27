@@ -14,7 +14,7 @@ using namespace std;
 #define ACK_SF 12           // 7, 12
 
 
-#define RESPONSE_LISTEN_WINDOW 250
+#define RESPONSE_LISTEN_WINDOW 500 //250 for SF 7, 500 for SF 12
 
 #define TEST_PACKET_50B "TESTPACKETTESTPACKETTESTPACKETTESTPACKETTESTPACKET" //50 byte (400bit) packet for testing
 #define TEST_PACKET_125B  "!@#$%^&*()_+1234567890-=`~[{]}|;:',<.>/?qQwWeErRtTyYuUiIoOpPaAsSdDfFgGhHjJkKlLzZxXcCvVbBnNmMñÑ¿¡áÁéÉíÍóÓúÚ£╛╜╧⌐╕ªº«»äëïöüÄ╙╪Ö" //125 byte (1000bit) packet for testing 
