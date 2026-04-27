@@ -123,7 +123,7 @@ void TXandListenforACK() {
           state = radio.readData(received_data);
           if (state == RADIOLIB_ERR_NONE) {
               // packet was successfully received
-              Serial.println("Received packet!");
+              //Serial.println("Received packet!");
               ACKmsge = received_data;
           }
           else if (state == RADIOLIB_ERR_RX_TIMEOUT) {
@@ -144,7 +144,7 @@ void TXandListenforACK() {
       }
       delay(10); // Small delay to prevent busy waiting
   }
-  Serial.printf("Listen window ended. ACK message: %s\n", ACKmsge.c_str());
+  Serial.printf("ACK received: %s\n", ACKmsge.c_str());
   resumeReception();
 }
 
@@ -171,7 +171,7 @@ void generateandTXACK(String packet_data) {
 
 double calcBER(String packet_data) {
   // Placeholder function to calculate BER. 
-  return 0.0; // Assume perfect reception for now
+  return 0.005; // Assume perfect reception for now
 }
 
 /*~~~~~Application~~~~~*/
