@@ -119,7 +119,7 @@ void TXandListenforACK() {
       Serial.printf("Transmission failed: %d\n", state);
   }
   else {
-      Serial.println("Packet transmitted, waiting for ACK...");
+      //Serial.println("Packet transmitted, waiting for ACK...");
   }
 
   // Start listening for response
@@ -288,7 +288,7 @@ void loop() {
 
     if (state == RADIOLIB_ERR_NONE) {
       // packet was successfully received
-      Serial.println("Received packet!");
+      //Serial.println("Received packet!");
       generateandTXACK(packet_data);
       
     } else if (state == RADIOLIB_ERR_RX_TIMEOUT) {
