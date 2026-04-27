@@ -294,6 +294,7 @@ void loop() {
       // packet was successfully received
       //Serial.println("Received packet!");
       generateandTXACK(packet_data);
+      Serial.println(packet_data);
       
     } else if (state == RADIOLIB_ERR_RX_TIMEOUT) {
       // timeout occurred while waiting for a packet

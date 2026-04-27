@@ -16,9 +16,7 @@ using namespace std;
 
 #define RESPONSE_LISTEN_WINDOW 250
 
-#define TEST_PACKET_10B "TESTPACKET" //10 byte (80bit) packet for testing
 #define TEST_PACKET_50B "TESTPACKETTESTPACKETTESTPACKETTESTPACKETTESTPACKET" //50 byte (400bit) packet for testing
-#define TEST_PACKET_100B "TESTPACKETTESTPACKETTESTPACKETTESTPACKETTESTPACKETTESTPACKETTESTPACKETTESTPACKETTESTPACKETTESTPACKET" //100 byte (800bit) packet for testing
 #define TEST_PACKET_125B  "!@#$%^&*()_+1234567890-=`~[{]}|;:',<.>/?qQwWeErRtTyYuUiIoOpPaAsSdDfFgGhHjJkKlLzZxXcCvVbBnNmMñÑ¿¡áÁéÉíÍóÓúÚ£╛╜╧⌐╕ªº«»äëïöüÄ╙╪Ö" //125 byte (1000bit) packet for testing 
 
 
