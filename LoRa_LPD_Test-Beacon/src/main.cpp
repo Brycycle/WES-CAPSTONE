@@ -18,6 +18,9 @@
 #define LORA_DIO1_PIN 14
 
 
+
+
+
 /*~~~~~Global Variables~~~~~*/
 bool TXToggle = false; // Toggle with button press to start or stop TX loop.
 bool inTXTestLoop = false; // Internal flag to track if in the TX loop (used to control RX logic)
@@ -115,7 +118,7 @@ void TXandListenforACK() {
 
   // Transmit test packet
   switchToTXlinkChannel();
-  int16_t state = radio.transmit(TEST_PACKET_125B);
+  int16_t state = radio.transmit(TEST_PACKET_50B);
   if (state != RADIOLIB_ERR_NONE) {
       Serial.printf("Transmission failed: %d\n", state);
   }

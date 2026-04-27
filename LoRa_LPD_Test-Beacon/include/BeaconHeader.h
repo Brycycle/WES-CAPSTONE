@@ -4,19 +4,45 @@
 #include <ctime>
 using namespace std;
 
+#define TEST_SF 12
+#define TEST_BW_INT 500    // Integer for preprocessor comparisons
+#define TEST_BW 500.0      // Float for actual radio config
+
 
 // LoRa channel configuration //Beacon Tx on uplink, remote unit Tx on downlink
 #define TX_FREQ 914.9
-#define TX_BW 125.0       // 10.4, 125, 500
-#define TX_SF 12           // 7, 12
+#define TX_BW TEST_BW       // 10.4, 125, 500
+#define TX_SF TEST_SF           // 7, 12
 #define ACK_FREQ 923.3
-#define ACK_BW 125.0       // 10.4, 125, 500
-#define ACK_SF 12           // 7, 12
+#define ACK_BW TEST_BW       // 10.4, 125, 500
+#define ACK_SF TEST_SF           // 7, 12
 
+// Dynamic RESPONSE_LISTEN_WINDOW based on SF and BW configuration
+#if TEST_SF == 7
+  #if TEST_BW_INT == 10
+    #define RESPONSE_LISTEN_WINDOW 2000   
+  #elif TEST_BW_INT == 125
+    #define RESPONSE_LISTEN_WINDOW 250   
+  #elif TEST_BW_INT == 500
+    #define RESPONSE_LISTEN_WINDOW 250   
+  #else
+    #define RESPONSE_LISTEN_WINDOW 2000   
+  #endif
+#elif TEST_SF == 12
+  #if TEST_BW_INT == 10
+    #define RESPONSE_LISTEN_WINDOW 90000 
+  #elif TEST_BW_INT == 125
+    #define RESPONSE_LISTEN_WINDOW 5000  
+  #elif TEST_BW_INT == 500
+    #define RESPONSE_LISTEN_WINDOW 1500   
+  #else
+    #define RESPONSE_LISTEN_WINDOW 90000  
+  #endif
+#else
+  #define RESPONSE_LISTEN_WINDOW 250     
+#endif
 
-#define RESPONSE_LISTEN_WINDOW 500 //250 for SF 7, 500 for SF 12
-
-#define TEST_PACKET_50B "TESTPACKETTESTPACKETTESTPACKETTESTPACKETTESTPACKET" //50 byte (400bit) packet for testing
+#define TEST_PACKET_50B "!@#$%^&*()_+1234567890-=`~[{]}|;:',<.>/?qQwWeErRtT" //50 byte (400bit) packet for testing
 #define TEST_PACKET_125B  "!@#$%^&*()_+1234567890-=`~[{]}|;:',<.>/?qQwWeErRtTyYuUiIoOpPaAsSdDfFgGhHjJkKlLzZxXcCvVbBnNmMñÑ¿¡áÁéÉíÍóÓúÚ£╛╜╧⌐╕ªº«»äëïöüÄ╙╪Ö" //125 byte (1000bit) packet for testing 
 
 
