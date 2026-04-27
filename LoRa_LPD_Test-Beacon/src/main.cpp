@@ -118,6 +118,10 @@ void TXandListenforACK() {
       Serial.printf("Transmission failed: %d\n", state);
   }
 
+  while(0){
+
+  }
+
   // Start listening for response
   switchToACKlinkChannel();
   resumeReception();
@@ -172,7 +176,7 @@ void generateandTXACK(String packet_data) {
 
   // Transmit ACK
   switchToACKlinkChannel();
-  String fullACK = ACKmsge + String(ber);
+  String fullACK = ACKmsge + String(ber) + "\n";
   int16_t state = radio.transmit(fullACK.c_str());
   if (state != RADIOLIB_ERR_NONE) {
       Serial.printf("Transmission failed: %d\n", state);
@@ -272,7 +276,7 @@ void loop() {
   }
 
   // Handle reception and send ACK 
-  if (receivedFlag) {
+  if (!TXToggle && receivedFlag) {
     receivedFlag = false;
 
     // you can receive data as an Arduino String
