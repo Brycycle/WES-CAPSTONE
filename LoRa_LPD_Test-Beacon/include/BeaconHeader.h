@@ -16,6 +16,21 @@ using namespace std;
   SD 12, BW 500    DReff 1171 bps
 */ 
 
+/*
+  SF 7 , BW 10.4   750 works with break
+  SF 7 , BW 25     750 works with break (faster than 750)
+  SF 7 , BW 125    500 works with break (faster than 500)
+  SF 7 , BW 500    500 works with break (faster than 500)
+
+  SF 12, BW 10.4   15000 with break const CRC error at remote unit on Rx, 
+                    no ack. not doing?
+  SF 12, BW 125    1500 works with break
+  SD 12, BW 500    500 works with break
+
+
+
+*/
+
 #define TEST_SF 12          // 7, 12
 #define TEST_BW_INT 500    // Integer for preprocessor comparisons: 10, 25, 125, 500
 #define TEST_BW 500.0      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
@@ -37,9 +52,9 @@ using namespace std;
   #elif TEST_BW_INT == 20
     #define RESPONSE_LISTEN_WINDOW 750  // 750 works, is success faster than 750
   #elif TEST_BW_INT == 125
-    #define RESPONSE_LISTEN_WINDOW 250  //250 works, is it too fast? success is much faster than 250ms
-  #elif TEST_BW_INT == 500
-    #define RESPONSE_LISTEN_WINDOW 250  // same above
+    #define RESPONSE_LISTEN_WINDOW 500  //250 works, is it too fast? success is much faster than 250ms
+  #elif TEST_BW_INT == 500              //making 500 min
+    #define RESPONSE_LISTEN_WINDOW 500  // same above
   #else
     #define RESPONSE_LISTEN_WINDOW 1000   
   #endif
