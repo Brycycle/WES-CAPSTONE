@@ -28,11 +28,11 @@ ACK transmitted: ACK BER: 0.005
 /*
   SF 7 , BW 10.4   750 works with break and self ACK fix
   SF 7 , BW 20     750 works with break (faster than 750)
-                    after self ACK fix alternates between good ACK and no ACK
+                    after self ACK fix and delay changes, still alternated
   SF 7 , BW 125    500 works with break (faster than 500)
-                    same as above
+                    after self ACK fix and delay changes, still alternated
   SF 7 , BW 500    500 works with break (faster than 500)
-                    same as above
+                    after self ACK fix and delay changes (remove first 100ms), doesn't work. Rx and ACK works but SUT doesn't see it
   SF 12, BW 10.4   15000 with break const CRC error at remote unit on Rx, 
                     no ack. not doing?
   SF 12, BW 125    1500 works with break
@@ -45,9 +45,9 @@ ACK transmitted: ACK BER: 0.005
 
 */
 
-#define TEST_SF 12          // 7, 12
-#define TEST_BW_INT 500    // Integer for preprocessor comparisons: 10, 25, 125, 500
-#define TEST_BW 500.0      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
+#define TEST_SF 7          // 7, 12
+#define TEST_BW_INT 20    // Integer for preprocessor comparisons: 10, 25, 125, 500
+#define TEST_BW 20.0      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
 #define OUTPUT_POWER 1
 
 
