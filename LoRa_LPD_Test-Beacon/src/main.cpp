@@ -162,7 +162,7 @@ void TXandListenforACK() {
               ACKmsg = "ACK reception failed with error code " + String(state);
           }
           resumeReception();  
-        //break;     // this will change the data rates if broken out early. 
+        break;     // this will change the data rates if broken out early. 
                     //static wait time or fastest possible?
       }
       delay(10);

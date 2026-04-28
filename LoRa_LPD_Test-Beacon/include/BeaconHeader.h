@@ -31,9 +31,9 @@ using namespace std;
 
 */
 
-#define TEST_SF 12          // 7, 12
-#define TEST_BW_INT 500    // Integer for preprocessor comparisons: 10, 25, 125, 500
-#define TEST_BW 500.0      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
+#define TEST_SF 7          // 7, 12
+#define TEST_BW_INT 10    // Integer for preprocessor comparisons: 10, 25, 125, 500
+#define TEST_BW 10.4      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
 #define OUTPUT_POWER 1
 
 
