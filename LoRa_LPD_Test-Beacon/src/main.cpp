@@ -184,7 +184,6 @@ void generateandTXACK(String packet_data) {
   String ACKmsge = "ACK BER: ";
   // Check packet integrety
   double ber = calcBER(packet_data);
-  delay(100);
 
   // Transmit ACK
   switchToACKlinkChannel();
