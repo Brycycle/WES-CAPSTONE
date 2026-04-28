@@ -16,7 +16,7 @@ ACK transmitted: ACK BER: 0.005
 // Target minimum: 50B payload = 400bits + overhead = ~450bps
 /*
   SF 7 , BW 10.4   DReff ~455 bps
-  SF 7 , BW 25     DReff ~1000 bps
+  SF 7 , BW 20     DReff ~911 bps
   SF 7 , BW 125    DReff 5468 bps
   SF 7 , BW 500    DReff 21,875 bps
 
@@ -26,23 +26,28 @@ ACK transmitted: ACK BER: 0.005
 */ 
 
 /*
-  SF 7 , BW 10.4   750 works with break
-  SF 7 , BW 25     750 works with break (faster than 750)
+  SF 7 , BW 10.4   750 works with break and self ACK fix
+  SF 7 , BW 20     750 works with break (faster than 750)
+                    after self ACK fix alternates between good ACK and no ACK
   SF 7 , BW 125    500 works with break (faster than 500)
+                    same as above
   SF 7 , BW 500    500 works with break (faster than 500)
-
+                    same as above
   SF 12, BW 10.4   15000 with break const CRC error at remote unit on Rx, 
                     no ack. not doing?
   SF 12, BW 125    1500 works with break
+                    works with self ACK fix
   SD 12, BW 500    500 works with break
+                    works with self ACK fix
+
 
 
 
 */
 
-#define TEST_SF 7          // 7, 12
-#define TEST_BW_INT 10    // Integer for preprocessor comparisons: 10, 25, 125, 500
-#define TEST_BW 10.4      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
+#define TEST_SF 12          // 7, 12
+#define TEST_BW_INT 500    // Integer for preprocessor comparisons: 10, 25, 125, 500
+#define TEST_BW 500.0      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
 #define OUTPUT_POWER 1
 
 
