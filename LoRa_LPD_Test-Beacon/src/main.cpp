@@ -197,9 +197,9 @@ void generateandTXACK(String packet_data) {
       Serial.println("ACK transmitted: " + fullACK);
   }
   
-  delay(50); // Allow radio to settle after transmission
+  delay(50); 
   switchToTXlinkChannel();
-  receivedFlag = false; // Clear any pending receive flags
+  receivedFlag = false; 
   resumeReception();
 }
 
@@ -308,7 +308,6 @@ void loop() {
     int state = radio.readData(packet_data);
 
     if (state == RADIOLIB_ERR_NONE) {
-      // Basic validation: reject packets that contain "ACK BER" (our own ACKs)
       if (packet_data.indexOf("ACK BER") == -1) {
         // packet was successfully received and is not our own ACK
         Serial.println("Received: " + packet_data);
