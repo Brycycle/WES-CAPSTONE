@@ -244,7 +244,7 @@ void setup() {
   // output power:                0 dBm
   // preamble length:             8 symbols (LoRaWAN preamble length)
   Serial.print("Initializing radio with TX channel (ready for TX or listen)...");
-  int16_t state = radio.begin(TX_FREQ, TX_BW, TX_SF, 5, 0x34, 1, 8);
+  int16_t state = radio.begin(TX_FREQ, TX_BW, TX_SF, 5, 0x34, OUTPUT_POWER, 8);
   if (state != RADIOLIB_ERR_NONE) {
       error_message("Radio initializion failed", state);
   }

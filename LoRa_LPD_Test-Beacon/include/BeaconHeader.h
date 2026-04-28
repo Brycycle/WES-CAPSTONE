@@ -16,9 +16,10 @@ using namespace std;
   SD 12, BW 500    DReff 1171 bps
 */ 
 
-#define TEST_SF 7          // 7, 12
-#define TEST_BW_INT 10    // Integer for preprocessor comparisons: 10, 25, 125, 500
-#define TEST_BW 10.4      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
+#define TEST_SF 12          // 7, 12
+#define TEST_BW_INT 500    // Integer for preprocessor comparisons: 10, 25, 125, 500
+#define TEST_BW 500.0      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
+#define OUTPUT_POWER 1
 
 
 // LoRa channel configuration //Beacon Tx on uplink, remote unit Tx on downlink
@@ -32,23 +33,23 @@ using namespace std;
 // Dynamic RESPONSE_LISTEN_WINDOW based on SF and BW configuration for Tx of ACK of 10Bytes
 #if TEST_SF == 7
   #if TEST_BW_INT == 10
-    #define RESPONSE_LISTEN_WINDOW 1000   
-  #elif TEST_BW_INT == 25
-    #define RESPONSE_LISTEN_WINDOW 500
+    #define RESPONSE_LISTEN_WINDOW 750   //1000 works, 500 no, 750 works
+  #elif TEST_BW_INT == 20
+    #define RESPONSE_LISTEN_WINDOW 750  // 750 works, is success faster than 750
   #elif TEST_BW_INT == 125
-    #define RESPONSE_LISTEN_WINDOW 250  
+    #define RESPONSE_LISTEN_WINDOW 250  //250 works, is it too fast? success is much faster than 250ms
   #elif TEST_BW_INT == 500
-    #define RESPONSE_LISTEN_WINDOW 250   
+    #define RESPONSE_LISTEN_WINDOW 250  // same above
   #else
     #define RESPONSE_LISTEN_WINDOW 1000   
   #endif
 #elif TEST_SF == 12
   #if TEST_BW_INT == 10
-    #define RESPONSE_LISTEN_WINDOW 15000 
+    #define RESPONSE_LISTEN_WINDOW 15000 // const CRC error at remote unit on Rx, no ack.
   #elif TEST_BW_INT == 125
-    #define RESPONSE_LISTEN_WINDOW 1000  
+    #define RESPONSE_LISTEN_WINDOW 1500  // 1000 remote apears to Rx and ACK but SUT no ACK. 1500 works.
   #elif TEST_BW_INT == 500
-    #define RESPONSE_LISTEN_WINDOW 500   
+    #define RESPONSE_LISTEN_WINDOW 500   //works
   #else
     #define RESPONSE_LISTEN_WINDOW 20000  
   #endif
