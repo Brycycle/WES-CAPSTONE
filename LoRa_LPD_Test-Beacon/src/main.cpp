@@ -184,6 +184,7 @@ void generateandTXACK(String packet_data) {
   String ACKmsge = "ACK BER: ";
   // Check packet integrety
   double ber = calcBER(packet_data);
+  delay(100);
 
   // Transmit ACK
   switchToACKlinkChannel();
@@ -201,7 +202,11 @@ void generateandTXACK(String packet_data) {
 
 double calcBER(String packet_data) {
   // Placeholder function to calculate BER. 
-  return 0.005; // Assume perfect reception for now
+  if(packet_data == TEST_PACKET_50B) {
+    return 0.0; // Perfect reception
+  } else{
+    return 1.0; // test for fail
+  }
 }
 
 bool switchToTXlinkChannel() {
