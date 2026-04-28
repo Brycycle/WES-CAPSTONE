@@ -4,6 +4,15 @@
 #include <ctime>
 using namespace std;
 
+/*
+Received: !@#$%^&*()_+1234567890-=`~[{]}|;:',<.>/?qQwWeErRtT
+ACK transmitted: ACK BER: 0.005
+
+Received: ACK BER: 0.005
+4567890-=`~[{]}|;:',<.>/?qQwWeErRtT
+ACK transmitted: ACK BER: 0.005
+*/
+
 // Target minimum: 50B payload = 400bits + overhead = ~450bps
 /*
   SF 7 , BW 10.4   DReff ~455 bps
