@@ -11,14 +11,14 @@ using namespace std;
   SF 7 , BW 125    DReff 5468 bps
   SF 7 , BW 500    DReff 21,875 bps
 
-  SF 12, BW 10.4   DReff 24 bps    questionable for time?
-  SF 12, BW 125    DReff 292.96 bps
+  SF 12, BW 10.4   DReff 24 bps       questionable for time?
+  SF 12, BW 125    DReff 292.96 bps   under target bps? - still do it
   SD 12, BW 500    DReff 1171 bps
 */ 
 
-#define TEST_SF 12          // 7, 12
-#define TEST_BW_INT 500    // Integer for preprocessor comparisons: 10, 25, 125, 500
-#define TEST_BW 500.0      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
+#define TEST_SF 7          // 7, 12
+#define TEST_BW_INT 10    // Integer for preprocessor comparisons: 10, 25, 125, 500
+#define TEST_BW 10.4      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
 
 
 // LoRa channel configuration //Beacon Tx on uplink, remote unit Tx on downlink

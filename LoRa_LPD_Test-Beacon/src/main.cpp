@@ -135,7 +135,7 @@ void TXandListenforACK() {
   unsigned long startTime = millis();
   
   // Wait for response within listen window
-  /////////////////////////Need to test all configs to show consistent ACK period and output cycles. 
+  /////////////////////////Need to test all configs to check loop time
   while(millis() - startTime < RESPONSE_LISTEN_WINDOW) {
       if(receivedFlag) {
           receivedFlag = false;
@@ -149,24 +149,25 @@ void TXandListenforACK() {
           }
           else if (state == RADIOLIB_ERR_RX_TIMEOUT) {
               // timeout occurred while waiting for a packet
-              Serial.println("SUT timeout!");
+              //Serial.println("SUT timeout!");
               ACKmsg = "SUT Rx timeout";
           } else if (state == RADIOLIB_ERR_CRC_MISMATCH) {
               // packet was received, but is malformed
-              Serial.println("SUT received CRC error!");
+              //Serial.println("SUT received CRC error!");
               ACKmsg = "SUT Rx CRC error";
           } else {
               // some other error occurred
-              Serial.print("failed, code ");
+              //Serial.print("failed, code ");
               Serial.println(state);
               ACKmsg = "ACK reception failed with error code " + String(state);
           }
           resumeReception();  
-        break;     ////////////////////////////////////Does this break out of the while loop or just the if statement?
+        break;     //////////// this will change the data rates if broken out early. 
+                    //static wait time or fastest possible?
       }
-      delay(10); // Small delay to prevent busy waiting
+      delay(10);
   }
-  Serial.print(ACKmsg); ////////////////////////Need to have logic for either no ack or ack, this could print both? Put into explicit logic for no ack or ack. bool variable?
+  Serial.print(ACKmsg); 
   switchToTXlinkChannel();
   resumeReception();
 }
