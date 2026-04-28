@@ -80,7 +80,7 @@ using namespace std;
 void resumeReception();
 void configureRadioChannel(float freq, float bw, uint8_t sf);
 void error_message(const char* message, int16_t errorCode);
-void TXandListenforACK();
+bool TXandListenforACK();
 void generateandTXACK(String packet_data);
 double calcBER(String packet_data);
 
