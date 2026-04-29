@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "LoRa_LPD_Test-Beacon"
+		},
+		{
+			"name": "LoRa_LPD_Test-Beacon",
+			"path": "../LoRa_LPD_Test-Beacon"
+		}
+	],
+	"settings": {}
+}
