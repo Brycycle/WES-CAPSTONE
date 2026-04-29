@@ -4,15 +4,6 @@
 #include <ctime>
 using namespace std;
 
-/*
-Received: !@#$%^&*()_+1234567890-=`~[{]}|;:',<.>/?qQwWeErRtT
-ACK transmitted: ACK BER: 0.005
-
-Received: ACK BER: 0.005
-4567890-=`~[{]}|;:',<.>/?qQwWeErRtT
-ACK transmitted: ACK BER: 0.005
-*/
-
 // Target minimum: 50B payload = 400bits + overhead = ~450bps
 /*
   SF 7 , BW 10.4   DReff ~455 bps
@@ -20,34 +11,28 @@ ACK transmitted: ACK BER: 0.005
   SF 7 , BW 125    DReff 5468 bps
   SF 7 , BW 500    DReff 21,875 bps
 
-  SF 12, BW 10.4   DReff 24 bps       questionable for time?
-  SF 12, BW 125    DReff 292.96 bps   under target bps? - still do it
+  SF 12, BW 10.4   DReff 24 bps       questionable for time? - Not doing doing
+  SF 12, BW 125    DReff 292.96 bps   under target bps? - still doing it
   SD 12, BW 500    DReff 1171 bps
 */ 
 
 /*
-  SF 7 , BW 10.4   750 works with break and self ACK fix
-  SF 7 , BW 20     750 works with break (faster than 750)
-                    after self ACK fix and delay changes, still alternated
-  SF 7 , BW 125    500 works with break (faster than 500)
-                    after self ACK fix and delay changes, still alternated
-  SF 7 , BW 500    500 works with break (faster than 500)
-                    after self ACK fix and delay changes (remove first 100ms), doesn't work. Rx and ACK works but SUT doesn't see it
-  SF 12, BW 10.4   15000 with break const CRC error at remote unit on Rx, 
-                    no ack. not doing?
-  SF 12, BW 125    1500 works with break
-                    works with self ACK fix
-  SD 12, BW 500    500 works with break
-                    works with self ACK fix
+  SF 7 , BW 10.4   works without break and 10ms ACK delay and self ACK fix
+  SF 7 , BW 20     works without break and 10ms ACK delay and self ACK fix
+  SF 7 , BW 125    works without break and 10ms ACK delay and self ACK fix
+  SF 7 , BW 500    works without break and 10ms ACK delay and self ACK fix
+  SF 12, BW 10.4   not doing
+  SF 12, BW 125    works without break and 10ms ACK delay and self ACK fix
+  SD 12, BW 500    works without break and 10ms ACK delay and self ACK fix
 
 
 
 
 */
 
-#define TEST_SF 7          // 7, 12
-#define TEST_BW_INT 20    // Integer for preprocessor comparisons: 10, 25, 125, 500
-#define TEST_BW 20.0      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
+#define TEST_SF 12          // 7, 12
+#define TEST_BW_INT 500    // Integer for preprocessor comparisons: 10, 25, 125, 500
+#define TEST_BW 500.0      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
 #define OUTPUT_POWER 1
 
 
@@ -62,23 +47,23 @@ ACK transmitted: ACK BER: 0.005
 // Dynamic RESPONSE_LISTEN_WINDOW based on SF and BW configuration for Tx of ACK of 10Bytes
 #if TEST_SF == 7
   #if TEST_BW_INT == 10
-    #define RESPONSE_LISTEN_WINDOW 750   //1000 works, 500 no, 750 works
+    #define RESPONSE_LISTEN_WINDOW 1000   
   #elif TEST_BW_INT == 20
-    #define RESPONSE_LISTEN_WINDOW 750  // 750 works, is success faster than 750
+    #define RESPONSE_LISTEN_WINDOW 1000  
   #elif TEST_BW_INT == 125
-    #define RESPONSE_LISTEN_WINDOW 500  //250 works, is it too fast? success is much faster than 250ms
-  #elif TEST_BW_INT == 500              //making 500 min
-    #define RESPONSE_LISTEN_WINDOW 500  // same above
+    #define RESPONSE_LISTEN_WINDOW 1000  
+  #elif TEST_BW_INT == 500              
+    #define RESPONSE_LISTEN_WINDOW 1000   
   #else
     #define RESPONSE_LISTEN_WINDOW 1000   
   #endif
 #elif TEST_SF == 12
   #if TEST_BW_INT == 10
-    #define RESPONSE_LISTEN_WINDOW 15000 // const CRC error at remote unit on Rx, no ack.
+    #define RESPONSE_LISTEN_WINDOW 15000 // not testing
   #elif TEST_BW_INT == 125
-    #define RESPONSE_LISTEN_WINDOW 1500  // 1000 remote apears to Rx and ACK but SUT no ACK. 1500 works.
+    #define RESPONSE_LISTEN_WINDOW 1500  // 
   #elif TEST_BW_INT == 500
-    #define RESPONSE_LISTEN_WINDOW 500   //works
+    #define RESPONSE_LISTEN_WINDOW 1000   //
   #else
     #define RESPONSE_LISTEN_WINDOW 20000  
   #endif

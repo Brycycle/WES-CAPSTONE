@@ -162,7 +162,8 @@ bool TXandListenforACK() {
               ACKmsg = "ACK reception failed with error code " + String(state);
           }
           resumeReception();  
-        break;     // this will change the data rates if broken out early. 
+        
+          //break;     // this will change the data rates if broken out early. 
                     //static wait time or fastest possible?
       }
       delay(10);
@@ -188,6 +189,7 @@ void generateandTXACK(String packet_data) {
   // Transmit ACK
   switchToACKlinkChannel();
   String fullACK = ACKmsge + String(ber, 3) + "\n";  // 3 decimal places
+  delay(10); 
   int16_t state = radio.transmit(fullACK.c_str());
   if (state != RADIOLIB_ERR_NONE) {
       Serial.printf("Transmission failed: %d\n", state);
@@ -196,7 +198,7 @@ void generateandTXACK(String packet_data) {
       Serial.println("ACK transmitted: " + fullACK);
   }
   
-  delay(50); 
+  //delay(10); 
   switchToTXlinkChannel();
   receivedFlag = false; 
   resumeReception();
