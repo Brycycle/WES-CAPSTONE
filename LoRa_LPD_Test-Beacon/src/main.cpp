@@ -166,7 +166,7 @@ bool TXandListenforACK() {
           //break;     // this will change the data rates if broken out early. 
                     //static wait time or fastest possible?
       }
-      delay(10);
+      //delay(10);
   }
   Serial.print(ACKmsg); 
   switchToTXlinkChannel();
@@ -186,6 +186,7 @@ void generateandTXACK(String packet_data) {
   // Check packet integrety
   double ber = calcBER(packet_data);
 
+  //delay(10);
   // Transmit ACK
   switchToACKlinkChannel();
   String fullACK = ACKmsge + String(ber, 3) + "\n";  // 3 decimal places
@@ -303,6 +304,7 @@ void loop() {
   // Handle reception and send ACK 
   if (!TXToggle && receivedFlag && !inTXTestLoop) {
     receivedFlag = false;
+    Serial.println("packet received");
 
     // you can receive data as an Arduino String
     String packet_data;

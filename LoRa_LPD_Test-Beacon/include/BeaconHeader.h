@@ -31,13 +31,13 @@ using namespace std;
 */
 
 #define TEST_SF 12          // 7, 12
-#define TEST_BW_INT 500    // Integer for preprocessor comparisons: 10, 25, 125, 500
-#define TEST_BW 500.0      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
-#define OUTPUT_POWER 1
+#define TEST_BW_INT 125    // Integer for preprocessor comparisons: 10, 25, 125, 500
+#define TEST_BW 125.0      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
+#define OUTPUT_POWER 22
 
 
 // LoRa channel configuration //Beacon Tx on uplink, remote unit Tx on downlink
-#define TX_FREQ 914.9
+#define TX_FREQ 915
 #define TX_BW TEST_BW       
 #define TX_SF TEST_SF           
 #define ACK_FREQ 923.3
@@ -71,9 +71,11 @@ using namespace std;
   #define RESPONSE_LISTEN_WINDOW 1000     
 #endif
 
+
+
 #define TEST_PACKET_50B "!@#$%^&*()_+1234567890-=`~[{]}|;:',<.>/?qQwWeErRtT" //50 byte (400bit) packet for testing
 #define TEST_PACKET_125B  "!@#$%^&*()_+1234567890-=`~[{]}|;:',<.>/?qQwWeErRtTyYuUiIoOpPaAsSdDfFgGhHjJkKlLzZxXcCvVbBnNmMñÑ¿¡áÁéÉíÍóÓúÚ£╛╜╧⌐╕ªº«»äëïöüÄ╙╪Ö" //125 byte (1000bit) packet for testing 
-
+#define TEST_PACKET_255B "!@#$%^&*()_+1234567890-=`~[{]}|;:',<.>/?qQwWeErRtT!@#$%^&*()_+1234567890-=`~[{]}|;:',<.>/?qQwWeErRtT!@#$%^&*()_+1234567890-=`~[{]}|;:',<.>/?qQwWeErRtT!@#$%^&*()_+1234567890-=`~[{]}|;:',<.>/?qQwWeErRtT!@#$%^&*()_+1234567890-=`~[{]}|;:',<.>/?qQwWeErRtT12345"
 
 //function prototypes
 void resumeReception();
