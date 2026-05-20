@@ -181,15 +181,18 @@ void resumeReception() {
     }
 }
 
-void generateandTXACK(String packet_data) {
+void generateandTXACK(String packet_data, float packetRssi, float packetSnr) {
   String ACKmsge = "ACK BER: ";
   // Check packet integrety
   double ber = calcBER(packet_data);
 
-  //delay(10);
+  delay(10);
   // Transmit ACK
   switchToACKlinkChannel();
-  String fullACK = ACKmsge + String(ber, 3) + "\n";  // 3 decimal places
+  String fullACK = ACKmsge + String(ber, 3)
+    + ", RSSI: " + String(packetRssi, 1)
+    + ", SNR: " + String(packetSnr, 1)
+    + "\n";
   delay(10); 
   int16_t state = radio.transmit(fullACK.c_str());
   if (state != RADIOLIB_ERR_NONE) {
@@ -314,7 +317,9 @@ void loop() {
       if (packet_data.indexOf("ACK BER") == -1) {
         // packet was successfully received and is not our own ACK
         Serial.println("Received: " + packet_data);
-        generateandTXACK(packet_data);
+        float packetRssi = radio.getRSSI();
+        float packetSnr = radio.getSNR();
+        generateandTXACK(packet_data, packetRssi, packetSnr);
       } else {
         Serial.println("Rejected corrupted/self-ACK: " + packet_data);
       }

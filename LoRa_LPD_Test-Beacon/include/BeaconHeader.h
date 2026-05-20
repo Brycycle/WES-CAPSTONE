@@ -30,9 +30,9 @@ using namespace std;
 
 */
 
-#define TEST_SF 12          // 7, 12
-#define TEST_BW_INT 125    // Integer for preprocessor comparisons: 10, 25, 125, 500
-#define TEST_BW 125.0      // Float for actual radio config: 10.4, 25.0, 125.0, 500.0
+#define TEST_SF 7          // 7, 12
+#define TEST_BW_INT 500    // Integer for preprocessor comparisons: 10, 25, 125, 500
+#define TEST_BW 500.0      // Float for actual radio config: 10.4, 20.0, 125.0, 500.0
 #define OUTPUT_POWER 22
 
 
@@ -47,9 +47,9 @@ using namespace std;
 // Dynamic RESPONSE_LISTEN_WINDOW based on SF and BW configuration for Tx of ACK of 10Bytes
 #if TEST_SF == 7
   #if TEST_BW_INT == 10
-    #define RESPONSE_LISTEN_WINDOW 1000   
+    #define RESPONSE_LISTEN_WINDOW 1600   
   #elif TEST_BW_INT == 20
-    #define RESPONSE_LISTEN_WINDOW 1000  
+    #define RESPONSE_LISTEN_WINDOW 1100  
   #elif TEST_BW_INT == 125
     #define RESPONSE_LISTEN_WINDOW 1000  
   #elif TEST_BW_INT == 500              
@@ -61,9 +61,9 @@ using namespace std;
   #if TEST_BW_INT == 10
     #define RESPONSE_LISTEN_WINDOW 15000 // not testing
   #elif TEST_BW_INT == 125
-    #define RESPONSE_LISTEN_WINDOW 1500  // 
+    #define RESPONSE_LISTEN_WINDOW 2600  // 
   #elif TEST_BW_INT == 500
-    #define RESPONSE_LISTEN_WINDOW 1000   //
+    #define RESPONSE_LISTEN_WINDOW 1100   //
   #else
     #define RESPONSE_LISTEN_WINDOW 20000  
   #endif
@@ -82,7 +82,7 @@ void resumeReception();
 void configureRadioChannel(float freq, float bw, uint8_t sf);
 void error_message(const char* message, int16_t errorCode);
 bool TXandListenforACK();
-void generateandTXACK(String packet_data);
+void generateandTXACK(String packet_data, float packetRssi, float packetSnr);
 double calcBER(String packet_data);
 
 //common variables
