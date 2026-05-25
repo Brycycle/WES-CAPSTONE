@@ -1,0 +1,811 @@
+$-----------------------------------------------------------------------------------------------
+$		Classification: UNCLASSIFIED
+$		
+$-----------------------------------------------------------------------------------------------
+$
+$
+===
+0000                          $ Addressee
+1001                          $ Script Identification
+000:00:00.000                 $ Event Time
+9999                          $ Sender Address
+AJ01                          $ Script Number
+AJ                            $ Script Description
+B5                            $ IDD Version
+$
+$
+===
+0000                           $ Addressee
+1002                           $ Configuration Message
+000:00:00.000                  $ Event Time
+9999                           $ Sender Address
+RL                             $ Motion Model
+OWNSHIP                        $ Behavior Model
+6                              $ PPLI NPG
+6                              $ Indirect PPLI NPG
+6                              $ Force Training Video NPG
+$ SUAddr, IU, UType, Loc, STN, SO, SOStart, SOEnd, TrkStart, TrkEnd, NorthErr, EastErr, 
+1, 1, HSXYZ, SIF SD, 00001, 1, 2500, 2599, 00300, 00377, 0.00, 0.00, 0.00, 0.00, 0.00, NONE, 1
+2, 2, HSXYZ, SIF SD, 00002, 2, 2600, 2699, 00400, 00477, 0.00, 0.00, 0.00, 0.00, 0.00, NONE, 2
+$
+$
+===
+9998                          $ RFC Address
+1012                          $ RFC Configuration Message
+000:00:00.000                 $ Event Time
+9999                          $ Sender Address
+0                             $ Jammer_1  SO#
+0                             $ Jammer_2  SO#
+GAUS                          $ Jammer Type (GAUS,51,IMP1,IMP2)
+0                             $ Jammer ERP (dBm)
+IFF                           $ Jammer Filter Select (FULL,UPPER,IFF,NONE)
+Y                             $ Partial Time Jamming (Y,N)
+6.0                           $ Pulse Width (microseconds)
+13.0                          $ Period (microseconds)
+A,S,1,1,2,2
+$
+$
+$ ----------------------------------------------------------------------------------
+$
+$	Initialize Simulated Objects
+$
+$ ----------------------------------------------------------------------------------
+===
+0000                           $ Addressee
+6011                           $ Initialize/Update Track
+000:00:00.000                  $ Event Time
+9999                           $ Sender Address
+1                              $ SIM Object Number
+                               $ Track Number Reference
+                               $ Index Number
+                               $ Source Track Number
+N000:00:00.00                  $ Latitude
+E000:00:00.00                  $ Longitude
+25000                          $ Altitude in feet
+00000                          $ Climb/Dive rate ft/sec
+00000                          $ Climb Acceleration/Deceleration (ft/s/s)
+00000                          $ Speed (knots)
+00000                          $ Path Accel/Deccel (ft/s/s)
+0.00000                        $ True-North heading (degree) (Move north first)
+00000                          $ Turn Rate (deg/sec)
+00000                          $ Turn Accel (deg/s/s)
+1                              $ Specific Type
+AIR                            $ Track Category
+3                              $ Identity
+                               $ Link Community
+$
+$
+===
+0000                           $ Addressee
+6011                           $ Initialize/Update Track
+000:00:00.000                  $ Event Time
+9999                           $ Sender Address
+2                              $ SIM Object Number
+                               $ Track Number Reference
+                               $ Index Number
+                               $ Source Track Number
+S006:40:00.00                  $ Latitude
+W000:00:00.00                  $ Longitude 31.413 feet from Antenna A
+25000                          $ Altitude in feet
+00000                          $ Climb/Dive rate ft/sec
+00000                          $ Climb Acceleration/Deceleration (ft/s/s)
+00000                          $ Speed (knots)
+00000                          $ Path Accel/Deccel (ft/s/s)
+0.00000                        $ True-North heading (degree) (Move north first)
+00000                          $ Turn Rate (deg/sec)
+00000                          $ Turn Accel (deg/s/s)
+1                              $ Specific Type
+AIR                            $ Track Category
+3                              $ Identity
+                               $ Link Community
+$
+$
+$
+$ ----------------------------------------------------------------------------------------
+$        		Begin Motion
+$ ----------------------------------------------------------------------------------------
+$ TUT and TT1 move North at 720 Knots for 10 seconds, then wait 50 seconds.
+$$$$$$$$$$$$$$$ Round 1
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:01:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:02:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:01:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:01:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 2
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:02:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:04:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:02:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:02:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 3
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:03:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:06:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:03:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:03:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 4
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:04:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:08:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:04:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:04:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 5
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:05:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:10:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:05:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:05:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 6
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:06:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:12:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:06:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:06:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 7
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:07:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:14:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:07:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:07:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 8
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:08:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:16:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:08:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:08:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 9
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:09:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:18:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:09:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:09:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 10
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:10:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:20:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:10:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:10:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 11
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:11:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:22:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:11:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:11:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 12
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:12:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:24:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:12:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:12:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 13
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:13:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:26:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:13:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:13:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 14
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:14:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:28:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:14:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:14:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 15
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:15:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:30:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:15:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:15:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 16
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:16:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:32:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:16:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:16:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 17
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:17:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:34:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:17:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:17:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 18
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:18:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:36:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:18:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:18:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 19
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:19:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:38:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:19:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:19:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 20
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:20:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:40:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:20:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:20:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 21
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:21:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:42:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:21:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:21:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 22
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:22:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:44:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:22:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:22:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 23
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:23:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:46:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:23:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:23:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 24
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:24:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:48:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:24:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:24:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 25
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:25:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:50:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:25:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:25:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 26
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:26:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:52:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:26:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:26:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 27
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:27:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:54:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:27:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:27:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 28
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:28:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:56:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:28:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:28:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 29
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:29:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N000:58:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:29:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:29:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$$$$$$$$$$$$$$$ Round 30
+===
+0000                          $ Addressee
+6122                          $ Establish Waypoint
+000:30:00.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SIM Object Number
+N001:00:00.31                 $ Waypoint latitude
+W000:00:00.00                 $ Waypoint longitude
+25000                         $ Waypoint altitude
+000:30:10.000                 $ Waypoint arival time
+$
+$
+===
+0000                          $ Addressee
+6112                          $ Establish Waypoint
+000:30:10.000                 $ Event Time
+9999                          $ Sender Address
+1                             $ SO
+0                             $ Speed
+1E4                           $ Acceleration
+$
+$
+$===
+$0000                          $ Addressee
+$6118                          $ Establish Waypoint
+$000:25:30.500                 $ Event Time
+$9999                          $ Sender Address
+$8                             $ SO
+$CIRCCW                        $ Maneuver
+$0.25                         $ Turn Rate
+$25                            $ Leg Length
+$0                         $ Turn Acceleration
+$
+$
+=EOF
+$			      $ UNCLASSIFIED
