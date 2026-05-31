@@ -11,24 +11,11 @@ using namespace std;
   SF 7 , BW 125    DReff 5468 bps
   SF 7 , BW 500    DReff 21,875 bps
 
-  SF 12, BW 10.4   DReff 24 bps       questionable for time? - Not doing doing
+  SF 12, BW 10.4   DReff 24 bps       questionable for time? - Not doing becuase data rate not useful 
   SF 12, BW 125    DReff 292.96 bps   under target bps? - still doing it
   SD 12, BW 500    DReff 1171 bps
 */ 
 
-/*
-  SF 7 , BW 10.4   works without break and 10ms ACK delay and self ACK fix
-  SF 7 , BW 20     works without break and 10ms ACK delay and self ACK fix
-  SF 7 , BW 125    works without break and 10ms ACK delay and self ACK fix
-  SF 7 , BW 500    works without break and 10ms ACK delay and self ACK fix
-  SF 12, BW 10.4   not doing
-  SF 12, BW 125    works without break and 10ms ACK delay and self ACK fix
-  SD 12, BW 500    works without break and 10ms ACK delay and self ACK fix
-
-
-
-
-*/
 
 #define TEST_SF 7          // 7, 12
 #define TEST_BW_INT 10    // Integer for preprocessor comparisons: 10, 25, 125, 500
@@ -41,7 +28,7 @@ using namespace std;
 #define TX_BW TEST_BW       
 #define TX_SF TEST_SF           
 #define ACK_FREQ 923.3
-#define ACK_BW TEST_BW       // 10.4, 125, 500
+#define ACK_BW TEST_BW       
 #define ACK_SF TEST_SF         
 
 // Dynamic RESPONSE_LISTEN_WINDOW based on SF and BW configuration for Tx of ACK of 10Bytes
