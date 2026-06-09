@@ -1,17 +1,16 @@
-# WES-CAPSTONE
-Repo for WES 207 CAPSTONE project. Bryce Rooney, Cohort 13
-
 # Description
-This repo contains all deliveries, codebase, and working files used for the final Capstone Project for the UCSD Master's of Advance Study (MAS) Wireless Embedded Systems (WES) (UCSD MAS WES) Program. This Project was a collaboration with Naval Information Center Pacific (NIWC Pac) division 535 where Bryce works. 
+This contains the core data as outputting from lab. 
 
-This project set out to evaluated the LoRa Modulation Technique for initial evaluation of potential DoD applications and capture quantatative meterics on the waveform's resiliency, detectability, and geolocation performance. 
+## Range and AJ metrics excel doc
+This is the primary place of analysis on the range and AJ data. The data logged form the radios is found within the log folder. That data was inputted here and analysis and plots were obtained. 
 
-# Top Folder Structure:
+## Logs folder
+These are the raw txt files as outputted from the LoRa Heltec boards based on the code that was developed. The VS code project folder at the highest level has the log folders within there. THat was just copied here for anaylsis purpose but also kept where the path is actually used to save to. 
 
-LoRa_LPD_Test-Beacon - Primary codebase. (VScode and PlatformIO workspace project folder)
+## Lab ouputs Folder
+This contains the CAF png outputs as well as the scripts used for the RFN for resiliency testing. 
 
-Misc files - Folder of backup and working files used throughout the project. Reference and archival only. 
+### Detect Folder
+This contains the detection outs (ROC, Slash, histograms) for all configs of lora and the comparision waveform. 
 
-Test Data - All raw output data from lab and analysis working files (excel, plots, graphs, etc)
 
-Deliveries - All final deliveries of the project including a recorded presentation overview, the ppt used for the recording, and the final results paper.
