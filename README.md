@@ -1,6 +1,9 @@
 # WES-CAPSTONE
 Repo for WES 207 CAPSTONE project. Bryce Rooney, Cohort 13
 
+# Primary Delivery
+The priamry video presentation and report is found in the deliveries folder. Start there. 
+
 # Description
 This repo contains all deliveries, codebase, and working files used for the final Capstone Project for the UCSD Master's of Advance Study (MAS) Wireless Embedded Systems (WES) (UCSD MAS WES) Program. This Project was a collaboration with Naval Information Center Pacific (NIWC Pac) division 535 where Bryce works. 
 
